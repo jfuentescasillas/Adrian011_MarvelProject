@@ -15,7 +15,7 @@ class CharacterListFragment : Fragment() {
     val viewModel: CharacterListViewModel by viewModels()
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentCharacterListBinding.inflate(layoutInflater, container, false)
 
         viewModel.requestInformation()

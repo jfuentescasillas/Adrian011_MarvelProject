@@ -8,5 +8,4 @@ class MarvelRepository {
     suspend fun getAllCharacters(): ResponseAllCharactersDataModel {
         return MarvelNetwork().getAllCharacters()
     }
-
 }

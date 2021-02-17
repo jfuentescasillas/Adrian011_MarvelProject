@@ -17,10 +17,11 @@ class MarvelNetwork {
 
     private fun loadRetrofit() {
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://gateway.marvel.com")
+            .baseUrl("https://gateway.marvel.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(createHttpClient())
             .build()
+        BuildConfig.PUBLIC_KEY
 
         service = retrofit.create(MarvelService::class.java)
     }
@@ -36,6 +37,7 @@ class MarvelNetwork {
         // Logger Interceptor
         val loggerInterceptor = HttpLoggingInterceptor()
         loggerInterceptor.level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
+        builder.addInterceptor(loggerInterceptor)
 
         // App token
         val hash = ((System.currentTimeMillis()/1000).toString() + BuildConfig.PRIVATE_KEY + BuildConfig.PUBLIC_KEY).toMD5()
@@ -59,11 +61,5 @@ class MarvelNetwork {
         loadRetrofit()
 
         return service.getAllCharacters()
-    }
-
-
-    fun md5(input:String): String {
-        val md = MessageDigest.getInstance("MD5")
-        return BigInteger(1, md.digest(input.toByteArray())).toString(16).padStart(32, '0')
     }
 }
